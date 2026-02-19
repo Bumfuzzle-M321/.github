@@ -28,30 +28,30 @@ Im Folgenden sind die Systeme aufgelistet, welche Technologien diese verwenden u
 Das Backend sammelt die Kafka Nachrichten der Endgeräte und speichert diese einerseits in der Datenbank und sendet sie per Websocket an den Client. Ausserdem verarbeitet es das Hinzufügen neuer Endgeräte, sowie das Auslesen dieser. Beinhnaltet auch eine Registrierung und ein Login.
 
 - Java & Spring Boot
-  - Simpel, Etabliert und im Team bekannt
+  - Das benötigte Know-How ist im Team vorhanden. Ausserdem ist es eine etablierte Technologie, zu welcher es viele Ressourcen gibt, die uns dabei helfen, ein gutes und geeignetes Backend aufzubauen. Mit SpringSecurity haben wir ausserdem eine gutes Framework zur Authorisierung und Authentifizierung.
 - Micrometer
-  - Einfache Anbindung an Prometheus für Metriken
+  - Micrometer erlaubt die Instrumentation von JVM-Code. Es wird als Anbieterneutral angepriesen, man muss also keine Sorge vor Vendor-Lockin haben. Ausserdem ist es nativ in Spring-Boot eingebaut, weshalb es gut unterstützt wird.
 - Loki Logback Appender
-  - Einfache Anbindung an Loki für Logs
+  - Der Logback Appender erlaubt eine einfache Anbindung an Grafana-Loki für Logs. Es ist eine inoffizielle Community-Implementation, welche die schnellste Implementation des Logback-Appenders sein möchte, weshalb wir sie ausgewählt haben.
 - Spring Boot Kafka
-  - Benötigt, um Kafka Messages in Spring Boot auszulesen
+  - Erlaubt eine einfache Integration von Kafka in SpringBoot mit Hilfe von Annotationen und vorkonfigurierten Diensten.
 ## Logging und Monitoring
 Die folgenden Dienste werden für Logging und Monitoring verwendet:
 - Loki
-  - Zum verarbeiten der Logs
+  - Ist ein System von Grafana zum verarbeiten von Logs. Es ist sehr effizient, da es nicht den gesamten Log-Inhalt indexiert, sondern nur die Labels der Logs.
 - Prometheus
-  - Zum verarbeiten der Metriken
+  - Zum verarbeiten der Metriken. Ist Open-Source und etabliert.
 - Grafana
-  - Visualisierung der Metriken und Logs
+  - Visualisierung der Metriken und Logs. Ist auch zum grossen Teil Open-Source und wir verwenden schon Grafana-Loki, weshalb es eine gute Integration gibt.
 ## SensorReporter
 Der SensorReporter wird auf den Endgeräten deployed und liest Sensorendaten aus und sendet diese per Kafka an das Backend.
 - Ruby
-  - Ruby hat viele vorgefertigte Libraries, die für unser Projekt Hilfreich sind. Macht Spass zu schreiben.
+  - Ruby hat viele vorgefertigte Libraries, die für unser Projekt Hilfreich sind.
 - RDKafka Ruby
-  - Gem, mit dem man einfach Messages auf Kafka producen kann
+  - Gem, mit dem man einfach Messages auf Kafka producen kann.
 ## Frontend
 - React
-  - Simpel, Etabliert und im Team bekannt
+  - Simpel, Etabliert und im Team bekannt.
 ## Datenbank
 - PostgreSQL
   - PostgreSQL ist ein leistungsstarkes, Open Source, relationales Datenbanksystem, das für Zuverlässigkeit, Datenintegrität (ACID-Konformität) und Erweiterbarkeit bekannt ist
@@ -72,3 +72,10 @@ Die Arbeit wird etwa 50/50 aufgeteilt.
     - Konfiguration der UUID
 ### Weggelassenes bei Krankheitsfällen
 - Frontend
+
+### Vorgehen
+Als erstes wird das Backend geschrieben, parallel dazu wird ebenfalls der SensorReporter geschrieben. Sobald das Backend bereit ist, kann man das Docker Compose erstellen. Dieses beinhaltet das Backend, die Datenbank, der Kafka Server, Grafana, Loki und Prometheus. Das gleiche gilt auch für den SensorReporter, dessen Compose aber nur sich selbst beinhaltet. Beim SensorReporter muss eine Konfiguration der UUID und UserID möglich sein.
+ 
+Wenn alles bereit ist, wird noch ein Frontend erstellt. Mit dem Frontend werden per Websocket die Daten vom Backend gelesen.
+ 
+Das Backend wird auf einer Zentralen Maschine Deployed, der SensorReporter kann X-Mal auf Endgeräten Deployed werden.

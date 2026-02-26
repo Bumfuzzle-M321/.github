@@ -79,3 +79,16 @@ Als erstes wird das Backend geschrieben, parallel dazu wird ebenfalls der Sensor
 Wenn alles bereit ist, wird noch ein Frontend erstellt. Mit dem Frontend werden per Websocket die Daten vom Backend gelesen.
  
 Das Backend wird auf einer Zentralen Maschine Deployed, der SensorReporter kann X-Mal auf Endgeräten Deployed werden.
+
+# Datenmodell
+```json
+{
+ "deviceId": "<string>",
+ data: {
+  "cpuArchitecture": "<string>",
+  "cpuModel": "<string>",
+  "cpuTemp": "<float>",
+  "cpuLoadP": "<float>"
+ }
+}
+```

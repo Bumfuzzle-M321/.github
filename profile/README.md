@@ -84,7 +84,7 @@ Das Backend wird auf einer Zentralen Maschine Deployed, der SensorReporter kann 
 ```json
 {
  "deviceId": "<string>",
- data: {
+ "data": {
   "cpuArchitecture": "<string>",
   "cpuModel": "<string>",
   "cpuTemp": "<float>",
